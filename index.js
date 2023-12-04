@@ -1,11 +1,9 @@
-const { createServer } = require('http');
 const express = require('express');
-const mysql = require('mysql');
-const cors = require('cors'); // Importando o CORS
-
 const app = express();
+const mysql = require('mysql');
 
-// Configuração da conexão com o banco de dados MariaDB
+
+
 const connection = mysql.createConnection({
   host: 'kds.mysql.database.azure.com',
   user: 'endringer',
@@ -13,24 +11,20 @@ const connection = mysql.createConnection({
   database: 'bancoKds',
 });
 
-// Conectar ao banco de dados
-connection.connect((err) => {
-  if (err) {
-    console.error('Erro ao conectar ao banco de dados:', err);
-    return;
-  }
-  console.log('Conexão ao banco de dados MariaDB estabelecida');
-});
 
 // Middleware para permitir JSON nas requisições
 app.use(express.json());
 
 // Configuração do CORS para permitir requisições do seu aplicativo React
-app.use(cors({
-  origin: 'http://localhost:3001', // ou o domínio onde seu aplicativo React está hospedado
-  methods: ['GET', 'POST', 'PUT'], // Métodos permitidos
-  allowedHeaders: ['Content-Type', 'Authorization'], // Cabeçalhos permitidos
-}));
+app.use(
+  express.urlencoded({ extended: true }),
+  express.json(),
+  cors({
+    origin: 'http://localhost:3001', // ou o domínio onde seu aplicativo React está hospedado
+    methods: ['GET', 'POST', 'PUT'], // Métodos permitidos
+    allowedHeaders: ['Content-Type', 'Authorization'], // Cabeçalhos permitidos
+  })
+);
 
 // Rota GET para obter todos os pedidos
 app.get('/api/pedidos', (req, res) => {
@@ -79,10 +73,10 @@ app.put('/api/pedido/:id', (req, res) => {
   });
 });
 
-// Utilizando o createServer do Node para criar o servidor
-const server = createServer(app);
-
-// Configurando o server para escutar a porta definida pelo ambiente do Vercel
-server.listen(process.env.PORT || 3000, () => {
-  console.log(`Servidor rodando na porta ${process.env.PORT || 3000}`);
+// Iniciando o servidor
+app.all('/', (req, res) => {
+  console.log("Just got a request!");
+  res.send('Yo!');
 });
+
+app.listen(process.env.PORT || 3000);
