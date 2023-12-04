@@ -1,5 +1,8 @@
 {
     "version": 2,
+    "engines": {
+        "node": "16.x"
+    },
     "routes": [
         {
             "handle": "filesystem"
@@ -28,7 +31,7 @@
     ],
     "functions": {
         "api/index.js": {
-            "runtime": "now-node@"
+            "runtime": "now-node@20"
         }
     }
 }
