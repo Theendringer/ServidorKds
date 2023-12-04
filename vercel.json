@@ -29,9 +29,11 @@
             "dest": "/api/index.js"
         }
     ],
-    "functions": {
-        "api/index.js": {
-            "runtime": "now-node@20"
-        }
+   "functions": {
+    "api": {
+        "runtime": "nodejs16.x",
+        "memory": 1024,
+        "maxDuration": 10
     }
+}
 }
