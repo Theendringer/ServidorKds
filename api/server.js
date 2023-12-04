@@ -1,11 +1,9 @@
+const { createServer } = require('http');
 const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors'); // Importando o CORS
 
 const app = express();
-//const port = 3000;
-
-const port = process.env.PORT || 3000
 
 // Configuração da conexão com o banco de dados MariaDB
 const connection = mysql.createConnection({
@@ -24,10 +22,6 @@ connection.connect((err) => {
   console.log('Conexão ao banco de dados MariaDB estabelecida');
 });
 
-
-
-
-
 // Middleware para permitir JSON nas requisições
 app.use(express.json());
 
@@ -39,7 +33,7 @@ app.use(cors({
 }));
 
 // Rota GET para obter todos os pedidos
-app.get('/pedidos', (req, res) => {
+app.get('/api/pedidos', (req, res) => {
   connection.query('SELECT * FROM pedido', (err, results) => {
     if (err) {
       res.status(500).send('Erro ao buscar pedidos');
@@ -50,7 +44,7 @@ app.get('/pedidos', (req, res) => {
 });
 
 // Rota POST para criar um novo pedido
-app.post('/pedido', (req, res) => {
+app.post('/api/pedido', (req, res) => {
   const { produto, observacoes, numeroMesa, nomeCliente, dataCriacao, dataFim, status } = req.body;
   const newPedido = {
     produto,
@@ -72,7 +66,7 @@ app.post('/pedido', (req, res) => {
 });
 
 // Rota PUT para atualizar um pedido por ID
-app.put('/pedido/:id', (req, res) => {
+app.put('/api/pedido/:id', (req, res) => {
   const { id } = req.params;
   const updatedPedido = req.body;
 
@@ -85,7 +79,10 @@ app.put('/pedido/:id', (req, res) => {
   });
 });
 
-// Inicia o servidor na porta especificada
-app.listen(port, () => {
-  console.log(`Servidor rodando na porta ${port}`);
+// Utilizando o createServer do Node para criar o servidor
+const server = createServer(app);
+
+// Configurando o server para escutar a porta definida pelo ambiente do Vercel
+server.listen(process.env.PORT || 3000, () => {
+  console.log(`Servidor rodando na porta ${process.env.PORT || 3000}`);
 });
