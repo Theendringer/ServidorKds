@@ -1,0 +1,26 @@
+{
+    "version": 2,
+    "routes": [
+      {
+        "src": "/pedidos",
+        "methods": ["GET"],
+        "dest": "/index.js"
+      },
+      {
+        "src": "/pedido",
+        "methods": ["POST"],
+        "dest": "/index.js"
+      },
+      {
+        "src": "/pedido/:id",
+        "methods": ["PUT"],
+        "dest": "/index.js"
+      }
+    ],
+    "functions": {
+      "server": {
+        "runtime": "node@14.17.0"
+      }
+    }
+  }
+  
