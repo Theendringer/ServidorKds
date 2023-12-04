@@ -4,17 +4,17 @@
     {
       "src": "/pedidos",
       "methods": ["GET"],
-      "dest": "/api/index.js"
+      "dest": "/api/server.js"
     },
     {
       "src": "/pedido",
       "methods": ["POST"],
-      "dest": "/api/index.js"
+      "dest": "/api/server.js"
     },
     {
       "src": "/pedido/:id",
       "methods": ["PUT"],
-      "dest": "/api/index.js"
+      "dest": "/api/server.js"
     }
   ],
   "functions": {
