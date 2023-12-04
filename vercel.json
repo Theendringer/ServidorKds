@@ -19,7 +19,8 @@
     ],
     "functions": {
       "server": {
-        "runtime": "node@14.17.0"
+        "runtime": "node@14.17.0",
+          "handler": "api/index.js"
       }
     }
   }
